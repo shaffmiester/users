@@ -1,26 +1,30 @@
-package com.shaffersoft.service;
+package com.shaffersoft.controller;
 
 import com.shaffersoft.User;
-import com.shaffersoft.dao.UserDAO;
+import com.shaffersoft.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.ui.Model;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.anyListOf;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UserServiceTest {
+public class HomeControllerTest {
 
-    @Mock UserDAO userDAO;
-    @InjectMocks private UserService userService;
+    @Mock Model model;
+    @Mock UserService userService;
+    @InjectMocks HomeController controller;
 
     private List<User> users;
 
@@ -43,12 +47,15 @@ public class UserServiceTest {
 
     @Test
     public void getAllUsersTest(){
-        when(userDAO.getUsers()).thenReturn(users);
+        when(userService.getAllUsers()).thenReturn(users);
 
-        List<User> actualUsers = userService.getAllUsers();
+        String view = controller.loadUsers(model);
 
-        verify(userDAO).getUsers();
-        assertSame(users, actualUsers);
+        verify(userService).getAllUsers();
+        verify(model).addAttribute(eq("users"), eq(users));
+        assertEquals("users",view);
     }
+
+
 
 }

@@ -36,7 +36,6 @@ public class HomeController {
     @RequestMapping(value="/user", method = RequestMethod.GET)
     public String loadUsers(Model m) {
         List<User> users = userService.getAllUsers();
-        System.out.println(users);
         m.addAttribute("name", "Users Go Here");
         m.addAttribute("users", users);
         return "users";
@@ -45,7 +44,6 @@ public class HomeController {
     @RequestMapping(value="/user", method = RequestMethod.POST)
     public String addUser(Model m, @RequestParam("name") String name, @RequestParam("email") String email, @RequestParam("descriptions") List<String> descriptions) {
         userService.addUser(name, email, descriptions);
-        System.out.println("Description: " + descriptions);
         m.addAttribute("users", userService.getAllUsers());
         return "users";
     }
