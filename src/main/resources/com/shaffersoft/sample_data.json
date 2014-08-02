@@ -1,0 +1,14 @@
+[{
+  "name":"joel_1",
+  "id":"1",
+  "email":"jrs32490@ucmo.edu"
+},
+{
+  "name":"joel_2",
+  "id":"2",
+  "email":"jrs32490@ucmo.edu",
+  "descriptions": [
+      "happy",
+      "sad"
+  ]
+}]
