@@ -29,10 +29,22 @@ public class UserService {
 
     public List<String> getAllowableDescription(){
         List<String> allowableDescritpions = new ArrayList<String>();
-        allowableDescritpions.add("Happy");
-        allowableDescritpions.add("Mad");
-        allowableDescritpions.add("Glad");
-        allowableDescritpions.add("Sad");
+        allowableDescritpions.add("happy");
+        allowableDescritpions.add("mad");
+        allowableDescritpions.add("glad");
+        allowableDescritpions.add("sad");
         return allowableDescritpions;
+    }
+
+    public void deleteUser(String id) {
+        userDAO.deleteUser(id);
+    }
+
+    public User editUser(String id, String name, String email, List<String> descriptions) {
+        return userDAO.editUser(id, name, email, descriptions);
+    }
+
+    public List<User> getFilteredUsers(String description) {
+        return userDAO.getFilteredUsers(description);
     }
 }

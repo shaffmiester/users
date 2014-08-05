@@ -12,10 +12,13 @@
         <form method="post" action="${context}/user/${user.id}">
             Name: <input type="text" name="name" value="${user.name}"><br>
             Email: <input type="text" name="email" value="${user.email}"><br>
-            Descriptions: <input type="submit" value="Submit"><br>
-               <c:forEach items="${descriptions}" var="description">
-               <option value="${description}">${description}</option>
-               </c:forEach>
+            Description:
+              <select multiple name="descriptions" selected="${user.descriptions}">
+              <c:forEach items="${descriptions}" var="description">
+                 <option value="${description}">${description}</option>
+              </c:forEach>
+              </select><br>
+              <input type="submit" value="Submit">
         </form>
   </body>
 </html>

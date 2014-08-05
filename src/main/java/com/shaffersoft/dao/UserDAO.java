@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,13 +22,12 @@ public class UserDAO {
         users = initializeUsers();
     }
 
+    public UserDAO(List<User> users){
+        this.users = users;
+    }
+
     public User getUser(String id){
-        for(User currUser : users){
-            if(StringUtils.equalsIgnoreCase(id, currUser.getId())){
-                return currUser;
-            }
-        }
-        return null;
+        return findUserById(id);
     }
 
 
@@ -61,4 +61,42 @@ public class UserDAO {
     }
 
 
+    public void deleteUser(String id) {
+        for(Iterator<User> itr = users.listIterator(); itr.hasNext(); ){
+            User user = itr.next();
+            if(StringUtils.equalsIgnoreCase(id,user.getId())){
+                itr.remove();
+                return;
+            }
+        }
+    }
+
+    public User editUser(String id, String name, String email, List<String> descriptions) {
+        User user = findUserById(id);
+        user.setName(name);
+        user.setEmail(email);
+        user.setDescriptions(descriptions);
+        return user;
+    }
+
+    private User findUserById(String id){
+        for(User currUser : users){
+            if(StringUtils.equalsIgnoreCase(id, currUser.getId())){
+                return currUser;
+            }
+        }
+        return null;
+    }
+
+    public List<User> getFilteredUsers(String description) {
+        List<User> filteredUsers = new ArrayList<User>();
+        for(User currUser : users){
+            if(currUser.getDescriptions() != null) {
+                if (currUser.getDescriptions().contains(description.toLowerCase())) {
+                    filteredUsers.add(currUser);
+                }
+            }
+        }
+        return filteredUsers;
+    }
 }
