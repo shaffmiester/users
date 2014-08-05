@@ -44,7 +44,7 @@ public class UserService {
         return userDAO.editUser(id, name, email, descriptions);
     }
 
-    public List<User> getFilteredUsers(String description) {
-        return userDAO.getFilteredUsers(description);
+    public List<User> getFilteredUsers(List<String> descriptions) {
+        return userDAO.getFilteredUsers(descriptions);
     }
 }

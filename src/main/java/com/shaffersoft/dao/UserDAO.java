@@ -88,12 +88,15 @@ public class UserDAO {
         return null;
     }
 
-    public List<User> getFilteredUsers(String description) {
+    public List<User> getFilteredUsers(List<String> descriptions) {
         List<User> filteredUsers = new ArrayList<User>();
         for(User currUser : users){
             if(currUser.getDescriptions() != null) {
-                if (currUser.getDescriptions().contains(description.toLowerCase())) {
-                    filteredUsers.add(currUser);
+                for(String description : descriptions) {
+                    if (currUser.getDescriptions().contains(description.toLowerCase())) {
+                        filteredUsers.add(currUser);
+                        break;
+                    }
                 }
             }
         }

@@ -5,6 +5,7 @@ import com.shaffersoft.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,13 +36,13 @@ public class HomeController {
     }
 
     @RequestMapping(value="/user", method = RequestMethod.GET)
-    public String loadUsers(Model m, @RequestParam(value="descriptions", required=false) String description) {
+    public String loadUsers(Model m, @RequestParam(value="descriptions", required=false) List<String> descriptions) {
         List<User> users = null;
-        if(StringUtils.isEmpty(description)){
+        if(CollectionUtils.isEmpty(descriptions)){
             users = userService.getAllUsers();
         }
         else {
-          users = userService.getFilteredUsers(description);
+          users = userService.getFilteredUsers(descriptions);
         }
         m.addAttribute("descriptions", userService.getAllowableDescription());
         m.addAttribute("users", users);

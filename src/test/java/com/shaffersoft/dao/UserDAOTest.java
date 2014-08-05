@@ -96,7 +96,9 @@ public class UserDAOTest extends TestCase {
     @Test
     public void testGetFilteredUsers() throws Exception {
 
-        List<User> filteredUsers = userDAO.getFilteredUsers("happy");
+        List<String> descriptions = new ArrayList<String>();
+        descriptions.add("happy");
+        List<User> filteredUsers = userDAO.getFilteredUsers(descriptions);
 
         assertEquals(1, filteredUsers.size());
         assertEquals(userOne, filteredUsers.get(0));

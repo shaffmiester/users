@@ -14,8 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -61,10 +60,10 @@ public class HomeControllerTest {
         when(userService.getAllUsers()).thenReturn(users);
         when(userService.getAllowableDescription()).thenReturn(descriptions);
 
-        String view = controller.loadUsers(model, "");
+        String view = controller.loadUsers(model, new ArrayList<String>());
 
         verify(userService).getAllUsers();
-        verify(userService, never()).getFilteredUsers(anyString());
+        verify(userService, never()).getFilteredUsers(anyListOf(String.class));
 
         verify(model).addAttribute(eq("users"), eq(users));
         verify(model).addAttribute(eq("descriptions"), eq(descriptions));
@@ -73,13 +72,14 @@ public class HomeControllerTest {
 
     @Test
     public void getAllUsersFilterTest(){
-        String description = "happy";
-        when(userService.getFilteredUsers(anyString())).thenReturn(users);
+        List<String> descriptions = new ArrayList<String>();
+        descriptions.add("happy");
+        when(userService.getFilteredUsers(anyListOf(String.class))).thenReturn(users);
         when(userService.getAllowableDescription()).thenReturn(descriptions);
 
-        String view = controller.loadUsers(model, description);
+        String view = controller.loadUsers(model, descriptions);
 
-        verify(userService).getFilteredUsers(description);
+        verify(userService).getFilteredUsers(descriptions);
         verify(userService, never()).getAllUsers();
         verify(model).addAttribute(eq("users"), eq(users));
         verify(model).addAttribute(eq("descriptions"), eq(descriptions));

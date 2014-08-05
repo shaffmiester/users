@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.anyListOf;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
@@ -55,12 +56,13 @@ public class UserServiceTest {
 
     @Test
     public void getFilteredUsersTest(){
-        String description = "sad";
-        when(userDAO.getFilteredUsers(anyString())).thenReturn(users);
+        List<String> descriptions = new ArrayList<>();
+        descriptions.add("sad");
+        when(userDAO.getFilteredUsers(anyListOf(String.class))).thenReturn(users);
 
-        List<User> actualUsers = userService.getFilteredUsers(description);
+        List<User> actualUsers = userService.getFilteredUsers(descriptions);
 
-        verify(userDAO).getFilteredUsers(eq(description));
+        verify(userDAO).getFilteredUsers(eq(descriptions));
         assertSame(users, actualUsers);
     }
 
